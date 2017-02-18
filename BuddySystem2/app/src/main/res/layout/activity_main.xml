@@ -20,21 +20,22 @@
         android:background="@layout/circle_shape"
         android:textSize="50sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/red"/>
+        android:backgroundTint="@color/red"
+        android:onClick="openDialog"/>
 
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
+        android:text="Hello World!"/>
+    
     <ListView
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:layout_marginBottom="20sp"
-        android:divider="@color/colorAccent"
-        >
-    </ListView>
+        android:id="@+id/helpyList"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:divider="@color/red"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

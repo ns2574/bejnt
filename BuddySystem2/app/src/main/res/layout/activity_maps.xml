@@ -7,7 +7,7 @@
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.example.wardw.myapplication.MapsActivity"
+        tools:context="com.example.wardw.myapplication.com.example.nielasultana.buddysystem.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"

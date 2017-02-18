@@ -10,13 +10,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.nielasultana.buddysystem.MainActivity">
 
+    <Button
+        android:id="@+id/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="HELP!"
+        android:background="@layout/circle_shape"
+        android:textSize="50sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/red"/>
+
+
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ListView
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginBottom="20sp"
+        android:divider="@color/colorAccent"
+        >
+    </ListView>
 
 </RelativeLayout>

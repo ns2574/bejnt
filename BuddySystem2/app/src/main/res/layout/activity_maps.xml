@@ -22,7 +22,6 @@
         android:text="Report Event"
         android:textSize="18sp"
         android:textColor="#ffffff"
-        android:background="#ff0000"
-        android:id="@+id/reportOptions"/>
+        android:background="#ff0000" />
 
 </LinearLayout>

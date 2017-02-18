@@ -3,9 +3,6 @@ package com.example.wardw.myapplication;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,7 +14,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Button report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +24,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        report = (Button)findViewById(R.id.reportOptions);
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showReportOptions();
-            }
-        });
     }
 
 
@@ -59,21 +47,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sw).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
-
-
-
-    private void showReportOptions(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        View view = getLayoutInflater().inflate(R.layout.report_popup, null);
-
-        builder.setView(view);
-
-        builder.create().show();
-    }
-
-
-
-
 }

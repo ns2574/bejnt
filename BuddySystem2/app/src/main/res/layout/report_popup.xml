@@ -21,7 +21,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Application is being used innaproriately"
+        android:text="No event occured at arrival"
         android:textAllCaps="false"
         android:textColor="#ff0000"
         android:background="#ffffff"

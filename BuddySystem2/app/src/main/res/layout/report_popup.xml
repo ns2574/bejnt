@@ -1,19 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/red">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No event occured at arrival"
+        android:text="No event occured"
         android:textAllCaps="false"
         android:textColor="#ff0000"
         android:background="#ffffff"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/first" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Application is being used innaproriately"
+        android:textAllCaps="false"
+        android:textColor="#ff0000"
+        android:background="#ffffff"
+        android:layout_marginBottom="1dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         />
 
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Emergency help required at event location"
+        android:textAllCaps="false"
+        android:textColor="#ff0000"
+        android:background="#ffffff"
+        android:id="@+id/button2"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"/>
 
 
 </LinearLayout>

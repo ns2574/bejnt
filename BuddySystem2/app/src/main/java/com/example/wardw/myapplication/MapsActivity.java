@@ -1,15 +1,16 @@
 package com.example.wardw.myapplication;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,11 +19,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends ActionBarActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int PERMISSION_REQUEST_CODE = 1;
 
     private GoogleMap map;
+    private Button report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,14 @@ public class MapsActivity extends ActionBarActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        report = (Button)findViewById(R.id.reportOptions);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showReportOptions();
+            }
+        });
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -66,6 +74,27 @@ public class MapsActivity extends ActionBarActivity implements OnMapReadyCallbac
         } else {
             map.setMyLocationEnabled(true);
         }
+    }
+
+    private void showReportOptions(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        View view = getLayoutInflater().inflate(R.layout.report_popup, null);
+
+        Button first = (Button) view.findViewById(R.id.first);
+
+        builder.setView(view);
+        final AlertDialog ad = builder.create();
+
+        first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MapsActivity.this, "No event occurred", Toast.LENGTH_SHORT).show();
+                ad.cancel();
+            }
+        });
+
+        ad.show();
     }
 
 }

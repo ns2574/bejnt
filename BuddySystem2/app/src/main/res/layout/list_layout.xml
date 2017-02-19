@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textSize="25sp"
+    android:textAllCaps="false"
     android:backgroundTint="@color/white"
     android:shadowColor="@color/green"
     android:shadowDx="5"

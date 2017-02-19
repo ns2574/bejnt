@@ -9,5 +9,6 @@
     android:shadowColor="@color/green"
     android:shadowDx="5"
     android:shadowDy="5"
-    android:shadowRadius="5">
+    android:shadowRadius="5"
+    android:onClick="listLayoutButtons">
 </Button>

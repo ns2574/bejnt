@@ -2,13 +2,11 @@ package com.example.nielasultana.buddysystem;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.example.wardw.myapplication.R;
 
 
 public class MainActivity extends Activity {
@@ -34,6 +32,10 @@ public class MainActivity extends Activity {
         builder.setPositiveButton("Non-Severe", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
+
+                // Testing
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
         builder.setNeutralButton("Severe", new DialogInterface.OnClickListener() {

@@ -20,17 +20,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         String[] peopleInNeed = {"1", "2", "3", "4"};
-        //ArrayList<String> personList = new ArrayList<String>();
-        //personList.add("hellostrings");
-//
-//        Intent intentExtras = new Intent(MainActivity.this, MapsActivity.class);
-//        intentExtras.putString("personID", person);
-//        startActivity(intentExtras);
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_layout, peopleInNeed);
         ListView helpyList = (ListView) findViewById(R.id.helpyList);
         helpyList.setAdapter(adapter);
-
 
     }
 
@@ -45,8 +37,6 @@ public class MainActivity extends Activity {
                 // User clicked OK button
 
                 // Testing
-//                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-//                startActivity(intent);
                 String personid = "id";
                 Intent intentBundle = new Intent(MainActivity.this, MapsActivity.class);
                 Bundle bundle = new Bundle();
@@ -54,12 +44,6 @@ public class MainActivity extends Activity {
                 intentBundle.putExtras(bundle);
 
                 startActivity(intentBundle);
-
-//                if(intentBundle.hasExtra(personid))
-//                    Log.i(TAG, "Has String");
-//                else
-//                    Log.i(TAG, "No String");
-
             }
         });
         builder.setNeutralButton("Severe", new DialogInterface.OnClickListener() {

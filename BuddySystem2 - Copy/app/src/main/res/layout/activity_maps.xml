@@ -7,7 +7,7 @@
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.example.wardw.myapplication.com.example.nielasultana.buddysystem.MapsActivity"
+        tools:context="com.example.wardw.myapplication.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
@@ -16,13 +16,13 @@
 
 
     <Button
-        android:id="@+id/reportOptions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="Report Event"
         android:textSize="18sp"
         android:textColor="#ffffff"
-        android:background="#ff0000" />
+        android:background="#ff0000"
+        android:id="@+id/reportOptions"/>
 
 </LinearLayout>

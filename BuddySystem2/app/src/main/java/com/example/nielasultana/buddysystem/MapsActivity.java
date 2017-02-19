@@ -3,9 +3,10 @@ package com.example.nielasultana.buddysystem;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -21,29 +22,35 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int PERMISSION_REQUEST_CODE = 1;
+    private static final int UPDATE_INTERVAL = 5000;
 
     private GoogleMap map;
     private Button report;
+    private Marker marker;
+    private String telephone;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        if(getIntent().getStringExtra("id").equals("932939"))
-            Log.i("sdkjs", "Has String");
-        else
-            Log.i("sdkjs", "No String");
-
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Helper Location");
         }
+
+        telephone = getIntent().getStringExtra("id");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -55,17 +62,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showReportOptions();
             }
         });
+
+        updateTimer();
+    }
+
+    private void updateTimer() {
+        final Handler handler = new Handler();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        new GetUpdate().execute(false);
+                    }
+                });
+            }
+        }, 0, UPDATE_INTERVAL);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        LatLng target = new LatLng(40.691, -73.987);
-        map.addMarker(new MarkerOptions().position(target));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 15f));
+        marker = map.addMarker(new MarkerOptions().position(new LatLng(0, 0)));
+        new GetUpdate().execute(true);
 
         getPermission();
+    }
+
+    private void updateMarker(LatLng location, boolean setCamera){
+        marker.setPosition(location);
+        if(setCamera) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f));
+        }
     }
 
     @Override
@@ -119,6 +150,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         return false;
+    }
+
+    private class GetUpdate extends AsyncTask<Boolean, Void, Boolean> {
+
+        private LatLng location;
+
+        @Override
+        protected Boolean doInBackground(Boolean... booleens) {
+            //TODO: Get updated location
+
+            double longitude = 0;
+            double latitude = 0;
+            location = new LatLng(latitude, longitude);
+
+            return booleens[0];
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            updateMarker(location, result);
+        }
     }
 
 }

@@ -9,35 +9,29 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 
 public class MainActivity extends Activity {
 
-    private static final String TAG = "Activity";
+    private static final String TAG = "ActivityOP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //String[] peopleInNeed = {"1", "2", "3", "4"};
-        ArrayList<String> personList = new ArrayList<String>();
-        personList.add("hellostrings");
-
-//        Intent intentExtras = new Intent(MainActivity.this, MapsActivity.class);
-//        intentExtras.putStringArrayListExtra("personList", personList);
-//        startActivity(intentExtras);
+        String[] peopleInNeed = {"1", "2", "3", "4"};
+        //ArrayList<String> personList = new ArrayList<String>();
+        //personList.add("hellostrings");
 //
-//        if(intentExtras.hasExtra("personList"))
-//            Log.i(TAG, "Has String ArrayList");
-//        else
-//            Log.i(TAG, "No String ArrayList");
+//        Intent intentExtras = new Intent(MainActivity.this, MapsActivity.class);
+//        intentExtras.putString("personID", person);
+//        startActivity(intentExtras);
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_layout, personList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_layout, peopleInNeed);
         ListView helpyList = (ListView) findViewById(R.id.helpyList);
         helpyList.setAdapter(adapter);
+
+
     }
 
 
@@ -51,8 +45,21 @@ public class MainActivity extends Activity {
                 // User clicked OK button
 
                 // Testing
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+//                startActivity(intent);
+                String personid = "id";
+                Intent intentBundle = new Intent(MainActivity.this, MapsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(personid,"932939");
+                intentBundle.putExtras(bundle);
+
+                startActivity(intentBundle);
+
+//                if(intentBundle.hasExtra(personid))
+//                    Log.i(TAG, "Has String");
+//                else
+//                    Log.i(TAG, "No String");
+
             }
         });
         builder.setNeutralButton("Severe", new DialogInterface.OnClickListener() {
@@ -67,6 +74,5 @@ public class MainActivity extends Activity {
         dialog.show();
 
     }
-
 
 }

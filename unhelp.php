@@ -51,7 +51,7 @@
 		
 		//Check if exists in actual users are in a help request
 		$result = $link->prepare("SELECT helpers.active FROM helpers, emergency WHERE helpers.time = emergency.time AND helpers.damsel = emergency.damsel AND helpers.active = 1 AND helpers.helper = ? AND helpers.time = ? AND helpers.time >= ? AND emergency.damselhash = ?;");
-		$success = $result -> execute(array($telephone, $timestamp, date('Y-m-d H:i:s', time() - 10 * 60), $damsel));
+		$success = $result -> execute(array($telephone, $timestamp, date('Y-m-d H:i:s', time() - 3 * 60), $damsel));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -73,7 +73,7 @@
 		if($active == 1)
 		{
 			$result = $link->prepare("UPDATE helpers AS h SET active = 0 FROM emergency AS e WHERE e.time = h.time AND e.damsel = h.damsel AND h.active = 1 AND h.helper = ? AND h.time = ? AND h.time >= ? AND e.damselhash = ?;");
-			$success = $result -> execute(array($telephone, $timestamp, date('Y-m-d H:i:s', time() - 10 * 60), $damsel));
+			$success = $result -> execute(array($telephone, $timestamp, date('Y-m-d H:i:s', time() - 3 * 60), $damsel));
 			if(!$success)
 			{
 				$link->rollBack();

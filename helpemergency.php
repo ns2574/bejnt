@@ -51,7 +51,7 @@
 		
 		//Check if exists in actual users are in a help request
 		$result = $link->prepare("SELECT emergency.damsel FROM helprequest, emergency WHERE emergency.time = helprequest.time AND emergency.damsel = helprequest.damsel AND helprequest.helper = ? AND emergency.damselhash = ? AND emergency.time = ? AND ? >= ?;");
-		$success = $result -> execute(array($telephone, $damsel, $timestamp, $timestamp, date('Y-m-d H:i:s', time() - 10 * 60)));
+		$success = $result -> execute(array($telephone, $damsel, $timestamp, $timestamp, date('Y-m-d H:i:s', time() - 3 * 60)));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -73,7 +73,7 @@
 		
 		//Helpers can't be needing help too
 		$result = $link->prepare("SELECT * FROM emergency WHERE damsel = ? AND time >= ?;");
-		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 10 * 60)));
+		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 3 * 60)));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -92,7 +92,7 @@
 		
 		//Helpers can't help multiple people
 		$result = $link->prepare("SELECT * FROM helpers WHERE helper = ? AND time >= ? AND active = 1;");
-		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 10 * 60)));
+		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 3 * 60)));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -106,12 +106,12 @@
 			$link->rollBack();
 			$result = null;
 			$link = null;
-			die("9: You can't help if you need help right now!");
+			die("9: You can't help multiple people!");
 		}
 		
 		//If we already helped you before and it's still valid
 		$result = $link->prepare("SELECT * FROM helpers WHERE helper = ? AND time >= ? AND active = 0 AND time = ?;");
-		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 10 * 60), $timestamp));
+		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 3 * 60), $timestamp));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -124,7 +124,7 @@
 		{
 			//Lets update to fix this
 			$result = $link->prepare("UPDATE helpers SET active = 1 WHERE helper = ? AND time >= ? AND active = 0;");
-			$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 10 * 60)));
+			$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 3 * 60)));
 			if(!$success)
 			{
 				$link->rollBack();

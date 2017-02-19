@@ -62,7 +62,7 @@
 		
 		//Lets just make sure we aren't a active responder
 		$result = $link->prepare("SELECT * FROM helpers WHERE helper = ? AND time >= ? AND active = 1;");
-		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - /*10 * 60*/ 1 * 1)));
+		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - /*3 * 60*/ 1 * 1)));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -81,7 +81,7 @@
 		
 		//Lets just make sure there wasn't a emergency during our grace period
 		$result = $link->prepare("SELECT time FROM emergency WHERE damsel = ? AND time >= ?;");
-		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - /*10 * 60*/ 1 * 1)));
+		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - /*3 * 60*/ 1 * 1)));
 		if(!$success)
 		{
 			$link->rollBack();

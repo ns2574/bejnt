@@ -82,7 +82,7 @@
 		
 		//Time to grab actual value of people we are helping
 		$result = $link->prepare("SELECT user_info.latitude, user_info.longitude FROM user_info, helpers WHERE user_info.telephone = helpers.damsel AND time >= ? AND helpers.helper = ? AND helpers.active = 1;");
-		$success = $result -> execute(array(date('Y-m-d H:i:s', time() - 10 * 60), $telephone));
+		$success = $result -> execute(array(date('Y-m-d H:i:s', time() - 3 * 60), $telephone));
 		if(!$success)
 		{
 			$link->rollBack();
@@ -106,13 +106,13 @@
 			$recordedResult = $result -> fetch(PDO::FETCH_NUM);
 			$areHelping =  "{1,".$recordedResult[0].",".$recordedResult[1]."}";
 		}
-		else
+		if(true == true)//else
 		{
 			$helpedby = "{";
 			//Lets grab # people that are helping us.
 			$result = null;			
 			$result = $link->prepare("SELECT count(helper) FROM helpers WHERE damsel = ? AND time >= ?;");
-			$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 10 * 60)));	
+			$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 3 * 60)));	
 			if(!$success)
 			{
 				$link->rollBack();
@@ -140,7 +140,7 @@
 		//Time to grab actual values of people you could be helping
 		$result = null;			
 		$result = $link->prepare("SELECT helprequest.time, emergency.damselhash FROM helprequest, emergency  WHERE helprequest.damsel = emergency.damsel AND helprequest.time = emergency.time AND helprequest.helper = ? AND helprequest.time >= ?");
-		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 10 * 60)));	
+		$success = $result -> execute(array($telephone, date('Y-m-d H:i:s', time() - 3 * 60)));	
 		if(!$success)
 		{
 			$link->rollBack();

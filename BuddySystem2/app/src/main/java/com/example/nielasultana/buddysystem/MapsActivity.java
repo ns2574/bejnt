@@ -91,6 +91,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         View view = getLayoutInflater().inflate(R.layout.report_popup, null);
 
         Button first = (Button) view.findViewById(R.id.first);
+        Button second = (Button) view.findViewById(R.id.second);
+        Button third = (Button) view.findViewById(R.id.third);
 
         builder.setView(view);
         final AlertDialog ad = builder.create();
@@ -98,10 +100,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MapsActivity.this, "No event occurred", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+                Toast.makeText(MapsActivity.this, "Thank you for your report!", Toast.LENGTH_SHORT).show();
                 ad.cancel();
             }
         });
+
+
+        second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                Toast.makeText(MapsActivity.this, "The caller will be flagged", Toast.LENGTH_SHORT).show();
+                ad.cancel();
+            }
+        });
+
+
+        third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                Toast.makeText(MapsActivity.this, "Authorities have been contacted", Toast.LENGTH_SHORT).show();
+                ad.cancel();
+            }
+        });
+
 
         ad.show();
     }

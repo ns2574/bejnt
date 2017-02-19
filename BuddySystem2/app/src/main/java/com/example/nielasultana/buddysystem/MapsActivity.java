@@ -45,14 +45,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int LOCATION_REQUEST_CODE = 2;
     private static final int UPDATE_INTERVAL = 5000;
     private static final String URL_UPDATE = "http://52.37.120.183/hacknyu17/update.php";
+    private static final String URL_UNHELP = "http://52.37.120.183/hacknyu17/unhelp.php";
+    private static final String URL_REPORT = "http://52.37.120.183/hacknyu17/reportemergency.php";
 
     private GoogleMap map;
     private String telephone;
-    private Button report;
     private Marker marker;
     private Timer timer;
     private double longitude;
     private double latitude;
+    private String damsel;
+    private String timestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +69,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         telephone = getIntent().getStringExtra("id");
+        
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        report = (Button) findViewById(R.id.reportOptions);
+        Button report = (Button) findViewById(R.id.reportOptions);
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +184,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 onBackPressed();
                 Toast.makeText(MapsActivity.this, "Thank you for your report!", Toast.LENGTH_SHORT).show();
+                new ReportEvent(1).execute(telephone, damsel, timestamp);
                 ad.cancel();
             }
         });
@@ -189,6 +194,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 onBackPressed();
                 Toast.makeText(MapsActivity.this, "The caller will be flagged", Toast.LENGTH_SHORT).show();
+                new ReportEvent(2).execute(telephone, damsel, timestamp);
                 ad.cancel();
             }
         });
@@ -198,30 +204,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 onBackPressed();
                 Toast.makeText(MapsActivity.this, "The authorities have been contacted", Toast.LENGTH_SHORT).show();
+                new ReportEvent(3).execute(telephone, damsel, timestamp);
                 ad.cancel();
             }
         });
-
-
-        second.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                Toast.makeText(MapsActivity.this, "The caller will be flagged", Toast.LENGTH_SHORT).show();
-                ad.cancel();
-            }
-        });
-
-
-        third.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                Toast.makeText(MapsActivity.this, "Authorities have been contacted", Toast.LENGTH_SHORT).show();
-                ad.cancel();
-            }
-        });
-
 
         ad.show();
     }
@@ -229,6 +215,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onBackPressed() {
         timer.cancel();
+        new Unhelp().execute(telephone, damsel, timestamp);
         Intent intent = new Intent(MapsActivity.this, MainActivity.class);
         startActivity(intent);
     }
@@ -291,6 +278,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     double latitude = Double.valueOf(coord[1]);
                     double longitude = Double.valueOf(coord[2]);
                     location = new LatLng(latitude, longitude);
+
+                    int beginIndex = line.indexOf("{", line.indexOf("{", line.indexOf("{")));
+                    int endIndex = line.lastIndexOf("}");
+                    String[] records = line.substring(beginIndex + 1, endIndex).split(",");
+
+                    timestamp = records[0].substring(1, records[0].length() - 1);
+                    damsel = records[1].substring(1, records[1].length() - 1);
+
                 } else {
                     location = new LatLng(latitude, longitude);
                 }
@@ -307,6 +302,88 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             updateMarker(location, result);
         }
     }
+
+    private class Unhelp extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... urls) {
+            URL url;
+            HttpURLConnection client = null;
+
+            try {
+                url = new URL(URL_UNHELP);
+                client = (HttpURLConnection) url.openConnection();
+                client.setRequestMethod("POST");
+                client.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                client.setRequestProperty("charset", "utf-8");
+                client.setDoInput(true);
+                client.setDoOutput(true);
+
+                String input = String.format("telephone=%s&damsel=%s&timestamp=%s", urls[0], urls[1], urls[2]);
+
+                OutputStream out = new BufferedOutputStream(client.getOutputStream());
+                out.write(input.getBytes());
+                out.flush();
+                out.close();
+
+            } catch (IOException e) {
+                Log.d("HTTPUnhelp", e.getMessage());
+            }
+
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                String line = in.readLine();
+                Log.d("HTTPUnhelp", line);
+            } catch (IOException e){
+                Log.d("HTTPUnhelp", e.getMessage());
+            }
+
+            return null;
+        }
+    }
+
+    private class ReportEvent extends AsyncTask<String, Void, Void> {
+
+        private int reason;
+
+        public ReportEvent(int reason){
+            this.reason = reason;
+        }
+
+        @Override
+        protected Void doInBackground(String... urls) {
+            URL url;
+            HttpURLConnection client = null;
+
+            try {
+                url = new URL(URL_REPORT);
+                client = (HttpURLConnection) url.openConnection();
+                client.setRequestMethod("POST");
+                client.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                client.setRequestProperty("charset", "utf-8");
+                client.setDoInput(true);
+                client.setDoOutput(true);
+
+                String input = String.format("telephone=%s&damsel=%s&timestamp=%s&reason=%d", urls[0], urls[1], urls[2], reason);
+
+                OutputStream out = new BufferedOutputStream(client.getOutputStream());
+                out.write(input.getBytes());
+                out.flush();
+                out.close();
+
+            } catch (IOException e) {
+                Log.d("HTTPReport", e.getMessage());
+            }
+
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                String line = in.readLine();
+                Log.d("HTTPReport", line);
+            } catch (IOException e){
+                Log.d("HTTPReport", e.getMessage());
+            }
+
+            return null;
+        }
+    }
 }
-
-

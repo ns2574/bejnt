@@ -202,6 +202,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+
+        second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                Toast.makeText(MapsActivity.this, "The caller will be flagged", Toast.LENGTH_SHORT).show();
+                ad.cancel();
+            }
+        });
+
+
+        third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                Toast.makeText(MapsActivity.this, "Authorities have been contacted", Toast.LENGTH_SHORT).show();
+                ad.cancel();
+            }
+        });
+
+
         ad.show();
     }
 

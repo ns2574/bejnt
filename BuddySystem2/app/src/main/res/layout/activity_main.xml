@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/black"
     tools:context="com.example.nielasultana.buddysystem.MainActivity">
 
     <Button
@@ -15,8 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="HELP!"
+        android:layout_marginTop="50sp"
+        android:text="HELP"
+        android:textStyle="bold"
         android:background="@layout/circle_shape"
         android:textSize="50sp"
         android:textColor="@color/white"
@@ -26,8 +28,9 @@
     <ListView
         android:id="@+id/helpyList"
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        android:divider="@color/red"
+        android:layout_height="250sp"
+        android:divider="@color/black"
+        android:dividerHeight="3sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"/>
 

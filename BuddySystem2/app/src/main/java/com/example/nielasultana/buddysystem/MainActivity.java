@@ -15,6 +15,8 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
+    private static final String TAG = "ActivityOP";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,6 @@ public class MainActivity extends Activity {
         helpyList.setAdapter(adapter);
 
         new CreateOngoingNotification().execute();
-
     }
 
 
@@ -39,9 +40,15 @@ public class MainActivity extends Activity {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
 
-                // TODO: Testing
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
+                // Testing
+                String personid = "id";
+                Intent intentBundle = new Intent(MainActivity.this, MapsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(personid, "932939");
+                intentBundle.putExtras(bundle);
+
+                startActivity(intentBundle);
+
             }
         });
 

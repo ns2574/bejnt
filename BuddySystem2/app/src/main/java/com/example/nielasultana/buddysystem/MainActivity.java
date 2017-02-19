@@ -48,7 +48,6 @@ public class MainActivity extends Activity {
                 intentBundle.putExtras(bundle);
 
                 startActivity(intentBundle);
-
             }
         });
 
